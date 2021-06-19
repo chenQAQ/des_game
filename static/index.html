@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>king -test </title>
+    <style>
+        .btn {
+            width: 100px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border: 1px solid #f00;
+            color: #000;
+            padding-bottom: 12px;
+        }
+        
+        #box {
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        test page
+        <div class="btn" onclick="javaScript:alert(123);">alert</div>
+        <div class="btn" onclick="testshareUrlToZH()">分享到招乎</div>
+        <div class="btn" onclick="testShowContactsUserInfo()">用户详情页</div>
+        <div class="btn" onclick="testGetUserInfo()">登录用户信息</div>
+        <div class="btn" onclick="testGetDeviceInfo()">设备信息</div>
+        <div class="btn" onclick="testNavigationBarShow()">显示导航栏</div>
+        <div class="btn" onclick="testNavigationBarHide()">隐藏导航栏</div>
+        <div>
+            <textarea name="" id="box" cols="30" rows="10"></textarea>
+        </div>
+        <div>
+            <a href="CMBMobileOA:///?sysId=CMBH5Game&webConfig=eyJuYW1lIjoi5LiO5L2g6L%2BH5oubIiwid2ViVXJsIjoiaHR0cDovL2dhbWUuNTFndWFuaHVhaS5jb20vc3R1ZHkvY21iL3BrL3Jvb20vMTIzIn0%3D">移事通啊</a>
+        </div>
+    </div>
+    <script src="./script/vconsole-3.1.0.min.js"></script>
+    <script src="./script/Mobile.js"></script>
+    <script src="./script/base64.js"></script>
+
+    <script>
+        window.onunload = function() {
+            alert('离开页面')
+        }
+        window.onbeforeunload = function() {
+            alert('离开页面')
+        }
+        var vconsole = new VConsole()
+        if (window.WebSocket) {
+            console.log('has websocket')
+        }
+
+        function handleClick() {
+            console.log(MobileJS)
+        }
+
+        function getUserInfo() {
+            MobileJs.getUserInfo({
+                version: "1",
+                callback: {},
+                asyncData: ""
+            })
+        }
+
+        function testGetUserInfo() {
+            var option = {
+                callback: testGetUserInfoCallBack,
+                asyncData: ""
+            }
+            MobileJS.getUserInfo(option);
+        }
+
+        //获取登陆用户信息回调函数
+        function testGetUserInfoCallBack(option) {
+            try {
+                var retObj = option;
+                if (retObj.retCode < 0) {
+                    alert("错误信息：" + retObj.retMsg);
+                    return;
+                } else {
+                    //通过以下结构可以获取返回信息
+                    //retObj.data.ystId
+                    //retObj.data.sapId
+                    //retObj.data.name
+                    //retObj.data.orgId
+                    //retObj.data.orgName
+                    //retObj.data.pathId
+                    //retObj.data.pathName
+                    //retObj.data.emailId
+                    //retObj.data.position
+                    //retObj.data.mobile
+                    //retObj.data.tel
+                    //retObj.data.loginTime
+                    //retObj.data.loginMode
+                    //retObj.data.smallPhotoData
+                    console.log('用户登录信息：' + JSON.stringify(retObj.data));
+                }
+            } catch (err) {
+                alert("回调错误，原因[" + err.message + "]");
+                return;
+            }
+        }
+
+
+        function testShowContactsUserInfo() {
+            //参数
+            var option = {
+                callback: "",
+                asyncData: "",
+                id: "098581"
+            }
+            MobileJS.showContactsUserInfo(option);
+        }
+
+        function testGetDeviceInfo() {
+            var option = {
+                callback: testGetDeviceInfoCallBack,
+                asyncData: ""
+            }
+            MobileJS.getDeviceInfo(option);
+        }
+
+        //获取设备信息回调函数
+        function testGetDeviceInfoCallBack(option) {
+            try {
+                var retObj = option;
+                if (retObj.retCode < 0) {
+                    alert("错误信息：" + retObj.retMsg);
+                    return;
+                } else {
+                    //通过以下结构可以获取返回信息
+                    //retObj.data.osType
+                    //retObj.data.osVersion
+                    //retObj.data.appPublishVersion
+                    //retObj.data.appBuildVersion
+                    //retObj.data.deviceId
+                    //retObj.data.deviceName
+                    console.log('设备信息', retObj.data)
+                }
+            } catch (err) {
+                alert("回调错误，原因[" + err.message + "]");
+                return;
+            }
+        }
+
+        //隐藏导航栏
+        function testNavigationBarHide() {
+            var option = {
+                hidden: "Y",
+                animate: "Y"
+            }
+            MobileJS.navigationBar(option);
+        }
+
+        //显示导航栏
+        function testNavigationBarShow() {
+            var option = {
+                hidden: "N",
+                animate: "Y"
+            }
+            MobileJS.navigationBar(option);
+        }
+
+        //分享Url到招乎信息
+        function testshareUrlToZH() {
+            console.log('shareURL');
+            var title = '分享标题';
+            var image = '';
+            var subject = '与你过招';
+            var url =
+                "CMBMobileOA:///?sysId=CMBH5Game&webConfig=eyJuYW1lIjoiXHU1MjA2XHU0ZWFiIiwiMCI6Imh0dHA6XC9cLzE5Mi4xNjguMS4xMTM6ODg4OFwvd2ViXC9wa1wvcm9vbVwvMTAwIn0%3D";
+            var option = {
+                callback: "testshareUrlToZHCallBack",
+                asyncData: "",
+                title: title,
+                image: image,
+                subject: subject,
+                url: url
+            }
+            MobileJS.shareUrlToZH(option);
+        }
+        //分享Url到招乎回调函数
+        function testshareUrlToZHCallBack(option) {
+            try {
+                var retObj = option;
+                if (retObj.retCode < 0) {
+                    alert("错误信息：" + retObj.retMsg);
+                    return;
+                }
+            } catch (err) {
+                alert("回调错误，原因[" + err.message + "]");
+                return;
+            }
+        }
+
+        //1.加密
+        // var str = 'http://192.168.1.117:4826/';
+        var str = 'https://game.51guanhuai.com/api/static/'
+        var base = new cusBase64();
+
+        var webconfig = Base64.encode(JSON.stringify({
+            "name": "与你过招",
+            "webUrl": str
+        }))
+
+
+        console.log('webconfig', webconfig)
+        var encodeUrl = encodeURIComponent(webconfig);
+
+        console.log('encodeUrl', encodeUrl)
+
+
+        var result = 'CMBMobileOA:///?sysId=CMBH5Game&webConfig=' + encodeUrl;
+        console.log(result)
+        document.getElementById('box').innerHTML = result;
+        //base64
+        function cusBase64() {
+
+            // private property
+            _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+            // public method for encoding
+            this.encode = function(input) {
+                var output = "";
+                var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+                var i = 0;
+                input = _utf8_encode(input);
+                while (i < input.length) {
+                    chr1 = input.charCodeAt(i++);
+                    chr2 = input.charCodeAt(i++);
+                    chr3 = input.charCodeAt(i++);
+                    enc1 = chr1 >> 2;
+                    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                    enc4 = chr3 & 63;
+                    if (isNaN(chr2)) {
+                        enc3 = enc4 = 64;
+                    } else if (isNaN(chr3)) {
+                        enc4 = 64;
+                    }
+                    output = output +
+                        _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+                        _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+                }
+                return output;
+            }
+
+            // public method for decoding
+            this.decode = function(input) {
+                var output = "";
+                var chr1, chr2, chr3;
+                var enc1, enc2, enc3, enc4;
+                var i = 0;
+                input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+                while (i < input.length) {
+                    enc1 = _keyStr.indexOf(input.charAt(i++));
+                    enc2 = _keyStr.indexOf(input.charAt(i++));
+                    enc3 = _keyStr.indexOf(input.charAt(i++));
+                    enc4 = _keyStr.indexOf(input.charAt(i++));
+                    chr1 = (enc1 << 2) | (enc2 >> 4);
+                    chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+                    chr3 = ((enc3 & 3) << 6) | enc4;
+                    output = output + String.fromCharCode(chr1);
+                    if (enc3 != 64) {
+                        output = output + String.fromCharCode(chr2);
+                    }
+                    if (enc4 != 64) {
+                        output = output + String.fromCharCode(chr3);
+                    }
+                }
+                output = _utf8_decode(output);
+                return output;
+            }
+
+            // private method for UTF-8 encoding
+            _utf8_encode = function(string) {
+                string = string.replace(/\r\n/g, "\n");
+                var utftext = "";
+                for (var n = 0; n < string.length; n++) {
+                    var c = string.charCodeAt(n);
+                    if (c < 128) {
+                        utftext += String.fromCharCode(c);
+                    } else if ((c > 127) && (c < 2048)) {
+                        utftext += String.fromCharCode((c >> 6) | 192);
+                        utftext += String.fromCharCode((c & 63) | 128);
+                    } else {
+                        utftext += String.fromCharCode((c >> 12) | 224);
+                        utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                        utftext += String.fromCharCode((c & 63) | 128);
+                    }
+
+                }
+                return utftext;
+            }
+
+            // private method for UTF-8 decoding
+            _utf8_decode = function(utftext) {
+                var string = "";
+                var i = 0;
+                var c = c1 = c2 = 0;
+                while (i < utftext.length) {
+                    c = utftext.charCodeAt(i);
+                    if (c < 128) {
+                        string += String.fromCharCode(c);
+                        i++;
+                    } else if ((c > 191) && (c < 224)) {
+                        c2 = utftext.charCodeAt(i + 1);
+                        string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                        i += 2;
+                    } else {
+                        c2 = utftext.charCodeAt(i + 1);
+                        c3 = utftext.charCodeAt(i + 2);
+                        string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                        i += 3;
+                    }
+                }
+                return string;
+            }
+        }
+    </script>
+</body>
+
+</html>

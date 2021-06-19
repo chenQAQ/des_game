@@ -1,0 +1,105 @@
+## 测试
+kind: pipeline
+name: mb-test
+
+steps:
+- name: build
+  image: registry-vpc.cn-shenzhen.aliyuncs.com/dingteam/node:8-alpine
+  commands:
+  - npm i
+  - CI=false npm run build
+  - mv -f dist/index.html dist/static/index.html
+  - mv message.html dist/static/message.html
+  - ls -l dist && ls -l dist/static
+
+- name: deploy
+  image: appleboy/drone-scp
+  settings:
+    host: 47.112.28.76
+    username: root
+    password:
+      from_secret: ssh_test_pwd
+    target: 
+      - /data/wwwroot/apps/answer2/static/static/
+    source:
+      - dist/static/*
+    strip_components: 2
+
+- name: publish
+  image: plugins/docker
+  settings:
+    repo: registry-vpc.cn-shenzhen.aliyuncs.com/dingteam/front-answer-static
+    registry: registry-vpc.cn-shenzhen.aliyuncs.com
+    dockerfile: docker/Dockerfile
+    mirror: 'https://qo44bdgw.mirror.aliyuncs.com'
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+- name: notification
+  image: lddsb/drone-dingtalk-message
+  settings:
+    token: 8b929f2df31cf2bc4ef16ac8403f9094e704cb19bdf8de954f88688b62155798
+    type: markdown
+  when:
+    status:
+    - success
+    - failure
+
+trigger:
+  branch:
+  - dev/*
+  event:
+  - push
+
+image_pull_secrets: # 拉取私有镜像时需要
+- dockerconfigjson
+
+---
+## 生产
+kind: pipeline
+name: mb-prod
+
+steps:
+- name: build
+  image: registry-vpc.cn-shenzhen.aliyuncs.com/dingteam/node:8-alpine
+  commands:
+  - npm i
+  - CI=false npm run build
+  - mv -f dist/index.html dist/static/index.html
+  - mv message.html dist/static/message.html
+  - ls -l dist && ls -l dist/static
+  - echo -n "$(date '+%Y%m%d_%H%M%S'),latest" > .tags
+  - cat .tags
+
+- name: publish
+  image: plugins/docker
+  settings:
+    repo: registry.cn-hangzhou.aliyuncs.com/dingteam/front-answer-static
+    registry: registry.cn-hangzhou.aliyuncs.com
+    dockerfile: docker/Dockerfile
+    mirror: 'https://qo44bdgw.mirror.aliyuncs.com'
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+- name: notification
+  image: lddsb/drone-dingtalk-message
+  settings:
+    token: 8b929f2df31cf2bc4ef16ac8403f9094e704cb19bdf8de954f88688b62155798
+    type: markdown
+  when:
+    status:
+    - success
+    - failure
+
+trigger:
+  branch:
+  - master
+  event:
+  - push
+
+image_pull_secrets: # 拉取私有镜像时需要
+- dockerconfigjson

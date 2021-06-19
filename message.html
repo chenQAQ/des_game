@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<script>
+  function GetRequest() {
+    var url = location.search; //获取url中"?"符后的字串 
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+      var str = url.substr(1);
+      strs = str.split("&");
+      for (var i = 0; i < strs.length; i++) {
+        theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+      }
+    }
+    return theRequest;
+  }
+</script>
+<head>
+    <title>温馨提示</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="https://res.wx.qq.com/open/libs/weui/0.4.1/weui.css">
+</head>
+
+<body>
+    <div class="weui_msg">
+        <div class="weui_icon_area">
+            <i class="weui_icon_info weui_icon_msg"></i>
+        </div>
+        <div class="weui_text_area">
+            <h4 class="weui_msg_title">请在钉钉客户端打开链接</h4>
+        </div>
+    </div>
+</body>
+<script>
+var textDefault = document.getElementsByClassName('weui_msg_title')
+var error = GetRequest()['error']
+if (error != '' && error != undefined && error != null) {
+  textDefault[0].innerHTML = error
+}
+</script>
+</html>

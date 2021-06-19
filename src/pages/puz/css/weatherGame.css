@@ -1,0 +1,317 @@
+/*头部*/
+#game_hrader{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content:space-between;
+}
+
+#game_hrader img{
+    float: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#game_hrader span{
+    float: right;
+    height: 50px;
+    line-height: 50px;
+    font-size: 19px;
+}
+
+/*拼图游戏逻辑*/
+#game_content{
+    width: 100%;
+    position: absolute;
+    top:3.2rem;
+    z-index:-3;
+}
+
+#imgArea{
+    width: 5rem;
+    height: 5rem;
+    position: relative;
+    background: transparent;
+    margin: 10px auto;
+}
+
+#imgArea div.hover{
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    box-shadow: 0 0 8px #000;
+    z-index: 20;
+    *border: 1px solid #09F;
+}
+
+#game_c{
+    width: 100%;
+}
+
+#game_control{
+    /* height: 40px; */
+    width: 90%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+#btn,#scroe,#level{
+    width: 30%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: center;
+    background: #8ecdab;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+#btn{
+    float: left;
+}
+
+#btn:hover,#level:hover{
+    cursor: pointer;
+    background: #62baa0;
+}
+
+#scroe{
+    float: right;
+    color: red;
+}
+
+#level{
+    clear: both;
+    display: inline-block;
+}
+
+#game_result{
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+#game_result span{
+    display: inline-block;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: center;
+    background: #5E5E5E;
+    border-radius: 5px;
+}
+
+/*结果界面*/
+#game_reward{
+    margin: 10px auto;
+    display: none;
+}
+
+#game_reward_tips{
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+#gameAnswer{
+    display: block;
+    width: 200px;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+/*底部横向滚动条*/
+#game_footer{
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0.3rem;
+    z-index:-3;
+}
+
+#game_footer ul{
+    width: 100%;
+    height: 100%;
+    white-space: nowrap;
+}
+
+#game_footer ul li{
+    display: inline-block;
+}
+/* #game_footer ul li img{
+    width: 100%;
+    height: 100%;
+} */
+.imgcontent{
+    width: 3.5rem;
+    height: 3.5rem;
+
+}
+
+.select{
+    filter: alpha(opacity=70);
+    opacity: 0.7;
+    box-shadow: 0 0 8px #4943bd;
+    background: #3a337580;
+}
+
+/*加载提示*/
+#loading img{
+    display: block;
+    margin-top: 50px;
+    margin-left: 50px;
+    -webkit-animation:change 1s linear infinite;
+}
+
+#game_top{
+    width:100%;
+    position: absolute;
+    transform: translateY(-50%);
+    top:50%;
+    transition-duration: .5s;
+}
+.vs{
+    background: url('../img/vs.png');
+    width: 3.5rem;
+    height: 3.5rem;
+    background-size:100% 100%;
+    margin-top:-10px;
+    left:calc(50% - 1.75rem);
+    top:calc(50%  - 1.75rem);
+    position: absolute;
+}
+.bg{
+    position: absolute;
+    top:0;
+    z-index:-1;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to right,rgb(69 163 226) 0%,rgb(155 143 200) 50%,rgb(204 151 119) 51%,rgb(249 123 123) 100%);
+    transition-duration: .5s;
+}
+.bg2{
+    position: absolute;
+    z-index:-10;
+    background: url('../img/bg_sunny.png');
+    width:100%;
+    top:0;
+    height:100%;
+}
+
+#user-img{
+display: flex;
+width:100%;
+height:1.3rem;
+justify-content: space-between;
+}
+#user-left{
+width: 2.4rem;
+background: rgba(74, 175, 242, 0.48);
+border-top-right-radius: 40px;
+border-bottom-right-radius: 40px;
+text-align: right;
+}
+#user-left img,#user-right img{
+height: 88%;
+margin:3.5% 5%;
+border-radius: 50%;
+}
+.is-ok{
+    position: absolute;
+    background: url("../img/ok.png");
+    width: 0.5rem;
+    height: 0.5rem;
+    background-size:100% 100%;
+    right:0.15rem;
+    top:calc(40% - 0.25rem);
+}
+
+#user-right{
+width:2.4rem;
+background: rgba(242, 116, 116, 0.43);
+border-top-left-radius: 40px;
+border-bottom-left-radius: 40px;
+text-align: left;
+}
+#user-name{
+display: flex;
+justify-content: space-between;
+height: 0.5rem;
+align-items: flex-end;
+color:white;
+}
+#user-name div:nth-child(1){
+width: 2.2rem;
+text-align: right;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+font-size: 0.3rem;
+font-weight: bold;
+}
+#user-name div:nth-child(2){
+width:2.2rem;
+font-size: 0.3rem;
+font-weight: bold;
+
+text-align: left;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+}
+.invite{
+    padding:15%;
+    background: rgba(240, 240, 240, 0.76);
+}
+
+/* #game_footer{
+display: flex;
+justify-content: center;
+}
+#game_footer>div{
+height: 80%;
+margin: 5% 0px;
+width: 15px;
+border-radius: 20px;
+border:1px solid beige;
+background-color: #462096;
+position: relative;
+display: flex;
+justify-content: center;
+
+}
+#game_footer div:nth-child(1){
+margin-left: 5%;
+}
+#game_footer div:nth-child(3){
+margin-right: 5%;
+}
+#number-left{
+width:13px;
+position: absolute;
+bottom:-1px;
+left: -1px;
+background: #f2bcbc;
+}
+#number-right{
+width:13px;
+position: absolute;
+bottom:-1px;
+left: -1px;
+background: #f2bcbc;
+}
+#number-left-p{
+font-size: 14px;
+color: beige;
+position: absolute;
+top:calc(-5% - 12px);
+
+}
+#number-right-p{
+position: absolute;
+top:calc(-5% - 12px);
+font-size: 14px;
+color: beige;
+} */

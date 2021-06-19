@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <title>叮当答题</title>
+    <style>
+        #__vconsole .vc-switch {
+            display: none !important;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="//kuyi.shengws.com/common/vconsole/vconsole-3.1.0.min.js"></script>
+    <script src="//kuyi.shengws.com/common/reconnecting-websocket/reconnecting-websocket.min.js"></script>
+    <script>
+        (function() {
+            var vConsole = new VConsole();
+            window.vConsole = vConsole;
+        })();
+    </script>
+    <script>
+        var setTitle = function(title) {
+            var u = navigator.userAgent
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+            if (isAndroid) {
+                document.title = title
+            } else if (isiOS) {
+                var $body = $('body')
+                document.title = title
+            }
+        }
+    </script>
+</body>
+
+</html>

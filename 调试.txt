@@ -1,0 +1,4 @@
+{"channel": "blockade","action": "answer","data": {"blockade_id":352348,"step":1,"question_id":"26788","user_answer":"B"}}
+
+
+{"channel": "blockade","action": "startGame","data": {"blockade_num":1}}
