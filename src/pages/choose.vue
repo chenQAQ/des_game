@@ -158,10 +158,10 @@
                 obj['my_plant']={
                   plant_img:_this.show_prize.choose_plant_img,
                   plant_name:_this.show_prize.choose_plant_name,
-                  progress:50,
+                  progress:40,
                   prize_img:_this.show_prize.img,
                   prize_name:_this.show_prize.name,
-                  water:500
+                  water:600
                 };
                 this.$store.commit('setUserState',obj);
                 this.$router.replace({

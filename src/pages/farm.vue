@@ -3,7 +3,7 @@
     <div class="farm-bj">
       <toast v-if="showError==true" :showIndex="showIndex" :errMsg="errorInfo" :resetPath="path"></toast>
       <div class="my-plant">
-          <img>
+          <img :src="userdata.my_plant.plant_img">
       </div>
       <div class="water" @click="water()">
         <img src="../imgs/water.png">
@@ -106,17 +106,20 @@
     },
     methods:{
       init(){
-        $(".my-plant img").attr("src",this.userdata.my_plant.plant_img);
+        // $(".my-plant img").attr("src",this.userdata.my_plant.plant_img);
         this.progress_width=parseInt($(".progress-load").css("backgroundPosition"));
         this.progress_load=this.userdata.my_plant.progress;
         this.my_water=this.userdata.my_plant.water;
-        console.log(this.userdata);
+        this.updateTree(0);
         $(".progress-load").css("width",this.progress_width*this.progress_load/100);
         this.$ajax.get("/api/farm/getSubject").then((res)=>{
               this.lists=res.data
         })
       },
       water(){
+          if( this.progress_load==100){
+            return ;
+          }
           if(this.my_water<10){
             this.showIndex=2;
             this.errorInfo='剩余水滴不足，完成答题获得水滴吧';
@@ -131,10 +134,6 @@
               activity_id: this.$store.state.activityId,
               access_token: this.$store.state.access_token
             });
-            this.showIndex=4;
-            this.errorInfo='恭喜你完成所有答题，请耐心等待奖品的到来哦~';
-            this.showError=true;
-            return ;
           }
           let animation=$("<div class='animation-all'>" +
             "<div class=\"animation-watering\"></div>" +
@@ -159,14 +158,55 @@
           activity_id: this.$store.state.activityId,
           access_token: this.$store.state.access_token
         })
-      }
+      },
+      updateTree(bool){
+        if(bool){
+          if(this.progress_load==50){
+            $(".my-plant img").eq(0).css("opacity","0");
+            let dom=$(`<img src='${this.userdata.my_plant.plant_img.replace("1","2")}' style="opacity:0">`);
+            $(".my-plant").append(dom);
+            setTimeout(()=>{
+              $(".my-plant img").eq(1).css({opacity:1})
+            },1000);
+            setTimeout(()=>{
+              $(".my-plant img").eq(0).remove()
+            },5000)
+          }else if(this.progress_load==100){
+            $(".my-plant img").eq(0).css("opacity","0");
+            let dom=$(`<img src='${this.userdata.my_plant.plant_img.replace("1","3")}' style="opacity:0">`);
+            $(".my-plant").append(dom);
+            setTimeout(()=>{
+              $(".my-plant img").eq(1).css({opacity:1})
+            },1000);
+            setTimeout(()=>{
+              $(".my-plant img").eq(0).remove()
+            },5000)
+            setTimeout(()=>{
+              this.showIndex=4;
+              this.errorInfo='恭喜你完成所有答题，请耐心等待奖品的到来哦~';
+              this.showError=true;
+              return ;
+            },5000);
+          }
+        }else{
+          if(this.progress_load>=50 && this.progress_load<100){
+            $(".my-plant img").attr("src",this.userdata.my_plant.plant_img.replace("1","2"))
+          }else if(this.progress_load>=100){
+            $(".my-plant img").attr("src",this.userdata.my_plant.plant_img.replace("1","3"))
+          }
+        }
 
+      }
+    },
+    watch:{
+      'progress_load':function(newval,oldval) {
+        this.updateTree(1)
+      }
     }
   }
 </script>
 
 <style>
-
   .farm-bj{
     width: 100vw;
     height: 100vh;
@@ -196,10 +236,15 @@
   .my-plant{
     position: absolute;
     top:4.6rem;
-    left: 1.1rem;
+    width: 100vw;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
   }
   .my-plant>img{
+    transition-duration: 5s;
     width: 4.5rem;
+    position: absolute;
   }
   .my-progress{
     position: relative;
