@@ -235,7 +235,7 @@
   }
   .my-plant{
     position: absolute;
-    top:4.6rem;
+    bottom:36%;
     width: 100vw;
     height: 4rem;
     display: flex;
@@ -244,11 +244,12 @@
   .my-plant>img{
     transition-duration: 5s;
     width: 4.5rem;
+    height: 4rem;
     position: absolute;
   }
   .my-progress{
-    position: relative;
-    top:9.5rem;
+    position: absolute;
+    bottom:25%;
     width: 5rem;
     left: calc(50% - 2.5rem);
   }
@@ -384,7 +385,7 @@
     animation-iteration-count:1;
     animation-timing-function:ease-out;
     opacity: 0;
-    top:1.5rem;
+    bottom:70%;
     transition-duration: .5s;
     right:10px;
   }
@@ -392,31 +393,31 @@
     from {opacity:0.4;transform: translate(0,0)}
     25%   {
       opacity: 1;
-      transform: translate(-2.2rem,1.7rem) rotate(-45deg);
+      transform: translate(-2.2rem,60%) rotate(-45deg);
     }
     50%{
       opacity: 1;
-      transform: translate(-2.2rem,1.7rem) rotate(-45deg);
+      transform: translate(-2.2rem,50%) rotate(-45deg);
       transform-origin: 2rem 2rem;
     }
     60%{
       opacity: 1;
-      transform: translate(-1.9rem,1.7rem) rotate(-45deg);
+      transform: translate(-1.9rem,40%) rotate(-45deg);
       transform-origin: 2rem 2rem;
     }
     75%{
       opacity: 1;
-      transform: translate(-1.3rem,1.7rem) rotate(-45deg);
+      transform: translate(-1.3rem,50%) rotate(-45deg);
       transform-origin: 2rem 2rem;
     }
     90%{
       opacity: 1;
-      transform: translate(-2.4rem,1.7rem) rotate(-45deg);
+      transform: translate(-2.4rem,60%) rotate(-45deg);
       transform-origin: 2rem 2rem;
     }
     100%{
       opacity: 0;
-      transform: translate(-2rem,1.3rem) rotate(0deg);
+      transform: translate(-2rem,60%) rotate(0deg);
       transform-origin: 2rem 2rem;
     }
   }
@@ -432,12 +433,13 @@
     animation-timing-function:ease-out;
     opacity: 0;
     animation-fill-mode:backwards;
-    top:5rem;
+    bottom:55%;
     transition-duration: .3s;
   }
   @keyframes water{
-    0% {opacity:0;transform: translateY(0)}
-    100%   {opacity:1;transform: translateY(3rem)}
+    0% {opacity:0;bottom:55%}
+    50% {opacity:1}
+    100%   {opacity:0.5;bottom:35%}
   }
 
 </style>

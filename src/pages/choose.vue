@@ -197,18 +197,24 @@
 </script>
 
 <style scoped>
+
   .choose-bj{
     background: url("../imgs/choose_bj.jpg");
     background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
   }
-  .vux-slider{
-    top:3.6rem;
+  .choose-bj /deep/ .vux-slider{
+    bottom:5.5rem;
+    position: absolute;
+
   }
+ .choose-bj /deep/ .vux-swiper{
+     width: 100vw;
+   }
   .prize-des{
     position: relative;
-    top:-1.3rem;
+    top:-1.5rem;
   }
   .prize-des>p{
     font-size: 0.35rem;
@@ -230,7 +236,7 @@
     position: absolute;
     width: 100%;
     font-size: 0.35rem;
-    top:3rem;
+    bottom:9.8rem;
     color: #f2f2f2;
   }
   .my-choose-item>img{
@@ -247,13 +253,13 @@
     top:0.6rem!important;
   }
   .my-prize{
-    position: relative;
+    position: absolute;
     background: url("../imgs/click_bj.png");
     background-size:100% 100%;
     width: 7rem;
     left: calc(50% - 3.5rem);
     height: 5rem;
-    top:3.5rem;
+    bottom:0.5rem;
     display: flex;
     align-items: center;
   }
